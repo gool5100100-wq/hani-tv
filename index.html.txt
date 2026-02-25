@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hani TV Player</title>
+
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="header">
+Hani TV
+</div>
+
+<div class="player-box">
+<video id="player" controls autoplay></video>
+<audio id="adhanAudio"></audio>
+</div>
+
+<div class="sidebar">
+
+<h3>اختر صوت المؤذن</h3>
+
+<select onchange="changeAdhan(this.value)">
+<option value="adhan1.mp3">المؤذن 1</option>
+<option value="adhan2.mp3">المؤذن 2</option>
+<option value="adhan3.mp3">المؤذن 3</option>
+<option value="adhan4.mp3">المؤذن 4</option>
+<option value="adhan5.mp3">المؤذن 5</option>
+</select>
+
+<button onclick="addPlaylist()">إضافة قائمة تشغيل</button>
+
+</div>
+
+<div id="channels"></div>
+
+<script src="channels.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>

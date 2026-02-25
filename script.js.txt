@@ -1,0 +1,88 @@
+const player = document.getElementById("player");
+const adhanAudio = document.getElementById("adhanAudio");
+const channelsDiv = document.getElementById("channels");
+
+let currentAdhan = "adhan1.mp3";
+
+/* تشغيل القنوات */
+function playChannel(url){
+
+if(url.includes(".m3u8")){
+if(window.Hls){
+let hls = new Hls();
+hls.loadSource(url);
+hls.attachMedia(player);
+hls.on(Hls.Events.MANIFEST_PARSED, ()=>player.play());
+}
+}else{
+player.src=url;
+player.play();
+}
+
+}
+
+/* عرض القنوات */
+function renderChannels(){
+
+channelsDiv.innerHTML="";
+
+channels.forEach(ch=>{
+
+let div=document.createElement("div");
+div.className="channel";
+div.textContent=ch.name;
+
+div.onclick=()=>playChannel(ch.url);
+
+channelsDiv.appendChild(div);
+
+});
+
+}
+
+/* اختيار صوت الأذان */
+function changeAdhan(file){
+
+currentAdhan=file;
+localStorage.setItem("selectedAdhan",file);
+
+}
+
+/* تشغيل الأذان */
+function playAdhan(){
+
+adhanAudio.src=currentAdhan;
+adhanAudio.play();
+
+}
+
+/* إضافة قائمة تشغيل */
+function addPlaylist(){
+
+let url=prompt("أدخل رابط ملف m3u");
+
+if(!url) return;
+
+fetch(url)
+.then(res=>res.text())
+.then(data=>{
+
+localStorage.setItem("userPlaylist",data);
+alert("تم تحميل القائمة");
+
+})
+.catch(()=>alert("فشل التحميل"));
+
+}
+
+/* تحميل عند فتح التطبيق */
+window.onload=function(){
+
+const savedAdhan = localStorage.getItem("selectedAdhan");
+if(savedAdhan){
+currentAdhan=savedAdhan;
+}
+
+renderChannels();
+
+};
